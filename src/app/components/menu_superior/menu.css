@@ -1,0 +1,18 @@
+.title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+
+li {
+  list-style: none;
+  cursor: pointer;
+}
+
+li:hover {
+  color: #FF7F0A;
+  list-style: none;
+  cursor: pointer;
+
+  transition: all 0.5s ease-in-out;
+}
