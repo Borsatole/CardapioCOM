@@ -1,22 +1,33 @@
 import "./hero.css";
+import Image from 'next/image';
 
 import React from 'react'
 
 export default function Hero() {
   return (
-    <div className="hero w-full flex justify-center items-center  text-white h-screen">
-        <div className="w-2/3 flex justify-center items-center ">
-        <div className="max-w-1/2 flex flex-col gap-5">
+    <div className="hero w-full flex justify-center items-center pt-60 text-white h-screen md:pt-20">
+        <div className="w-10/12 flex justify-center items-center flex-col md:flex-row">
 
-            <h1 className="text-5xl font-bold max-w-3/4">Um universo de <span className="text-amber-500">sabores</span>.</h1>
+        <div className="w-full flex flex-col gap-5 md:max-w-1/2">
 
-            <p className="max-w-3/4">Que tal experimentar lanches deliciosos por um preço que cabe no seu bolso? Clique no botão abaixo e peça já!</p>
+            <h1 className="text-5xl text-center font-bold w-full
+            md:max-w-3/4 md:text-left
+            ">Um universo de <span className="text-amber-500">sabores</span>.</h1>
 
-            <button className="bg-amber-500 pt-2 pb-2 pl-5 pr-5 max-w-max">Cardapio</button>
+            <p className="text-center md:max-w-3/4 md:text-left">Que tal experimentar lanches deliciosos por um preço que cabe no seu bolso? Clique no botão abaixo e peça já!</p>
+
+            <div className="flex justify-center md:justify-start">
+            <button className="bg-amber-500 pt-2 pb-2 pl-5 pr-5 max-w-max hover:bg-amber-600 transition-all cursor-pointer">Cardapio</button>
+            </div>
         </div>
 
-        <div className="max-w-1/2">
-            <img src="https://viniciuslimaan.github.io/onlineMenu/img/burger.png" alt="" />
+        <div className="w-full md:max-w-1/2 p-10">
+          <Image
+            src="/images/burguer.png"
+            alt="Hambúrguer"
+            width={500}
+            height={500}
+          />
         </div>
     </div>
     </div>
