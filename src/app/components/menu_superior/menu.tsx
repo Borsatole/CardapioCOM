@@ -1,9 +1,9 @@
 import React from 'react'
 import { GiHamburgerMenu } from "react-icons/gi";
 
-import { TiShoppingCart } from "react-icons/ti";
 import { FaWhatsapp } from "react-icons/fa";
 import "./menu.css";
+import CarrinhoDeCompras from '../carrinho_compras/carrinho';
 
 
 
@@ -28,17 +28,14 @@ function Menu() {
             <li>Atendimento</li>
         </ul>
         
-        <div className='hidden md:flex icons gap-5'>
-            <TiShoppingCart size={30} />
-            <FaWhatsapp size={30} />
+        <div className='md:flex icons gap-5'>
+            <CarrinhoDeCompras />
+            <FaWhatsapp size={30} className='hidden md:flex'/>
         </div>
 
         {/* versao mobile */}
-        <div className='btnMobile md:hidden border-1 p-2'>
+        <div className='btnMobile md:hidden border-1 p-2 border-rounded-full'>
             <GiHamburgerMenu />
-
-
-
         </div>
     </div>
     </div>

@@ -3,15 +3,7 @@
 import { useState, useEffect } from 'react';
 import CardPrato from './card';
 
-interface Prato {
-  id: number;
-  imagem: string;
-  titulo: string;
-  categoria: string;
-  precoOriginal: string;
-  precoFinal: string;
-  descricao: string;
-}
+import { Prato } from '../types/types';
 
 
 function Cardapio() {
@@ -184,10 +176,6 @@ function Cardapio() {
         
     }, [categoriaSelecionada, pratos]);
 
-
-    
-
-    
     
 
   return (
