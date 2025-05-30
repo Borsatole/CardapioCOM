@@ -25,7 +25,7 @@ function ModalDeFinalizacao({ produtos, isOpen, setIsOpen }: ModalDeFinalizacaoP
         <h5 className="mb-0 text-lg font-semibold">Carrinho</h5>
         <button
             type="button"
-            className="box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300"
+            className="cursor-pointer box-content rounded-none border-none text-neutral-500 hover:text-neutral-800 hover:no-underline focus:text-neutral-800 focus:opacity-100 focus:shadow-none focus:outline-none dark:text-neutral-400 dark:hover:text-neutral-300 dark:focus:text-neutral-300 "
             onClick={() => setIsOpen(false)}
           >
             <span className="h-6 w-6 inline-block">

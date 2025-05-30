@@ -1,10 +1,11 @@
 import React from 'react';
 import { FaCartArrowDown } from "react-icons/fa";
-
+import { useAppContext } from '../carrinho_compras/appContext';
 interface CardPratoProps {
   id: number;
   imagem: string;
   titulo: string;
+  categoria: string;
   precoOriginal: string;
   precoFinal: string;
   descricao: string;
@@ -14,10 +15,27 @@ const CardPrato: React.FC<CardPratoProps> = ({
   id,
   imagem,
   titulo,
+  categoria,
   precoOriginal,
   precoFinal,
   descricao,
 }) => {
+  
+  const {produtos, setProdutos } = useAppContext();
+
+  const isInCart = produtos.some((produto) => produto.id === id);
+
+  const handleAddToCart = () => {
+    if (isInCart) {
+      alert('O prato já está no carrinho de compras.');
+      return;
+    }
+
+    const novoProduto = { id, imagem, titulo, categoria, precoOriginal, precoFinal, descricao };
+    setProdutos([...produtos, novoProduto]);
+    
+  };
+
   return (
     <div className="flex items-center justify-center px-2">
       <div className="w-full max-w-sm bg-white rounded-3xl shadow-xl overflow-hidden">
@@ -50,7 +68,7 @@ const CardPrato: React.FC<CardPratoProps> = ({
           <a
             target="_blank"
             rel="noopener noreferrer"
-            onClick={() => console.log('#' + id)}
+            onClick={() => handleAddToCart()}
             className="block text-white mt-6 w-full px-4 py-3 font-medium tracking-wide text-center capitalize transition-colors duration-300 transform bg-[#a90e0e] rounded-[14px] hover:bg-amber-600 focus:outline-none focus:ring cursor-pointer"
           >
             <div className='flex items-center justify-center gap-2'>
