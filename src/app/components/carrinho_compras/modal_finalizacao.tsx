@@ -18,7 +18,7 @@ function ModalDeFinalizacao({ produtos, isOpen, setIsOpen }: ModalDeFinalizacaoP
   return (
     <div
       className="fixed bottom-0 right-0 top-0 z-[1045] flex w-96 max-w-full flex-col border-l border-gray-200 bg-[#fff] text-neutral-700 shadow-lg dark:bg-gray-900 dark:text-white
-      opacity-90
+      opacity-100
       "
     >
       <div className="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
@@ -48,9 +48,17 @@ function ModalDeFinalizacao({ produtos, isOpen, setIsOpen }: ModalDeFinalizacaoP
         ) : (
           <ul className="space-y-3">
             {produtos.map((produto) => (
-              <li key={produto.id} className="flex justify-between items-center border-b pb-2">
-                <span>{produto.titulo}</span>
-                {/* <span className="font-medium">R$ {produto.precoFinal.toFixed(2)}</span> */}
+              <li key={produto.id} className="flex bg-amber-200 p-1.5 justify-between items-center pb-2 rounded-[14px]">
+                <div className="flex items-center gap-2 flex-col">
+                  <div className='flex gap-2'>
+                  <img src={produto.imagem} alt={produto.titulo} className="w-16 h-16" />
+                  <span className="font-bold">{produto.titulo}</span>
+                  </div>
+                  <div className='flex gap-2 '>
+                    <a href="">editar</a>
+                    <a href="">remover</a>
+                  </div>
+                </div>
               </li>
             ))}
           </ul>

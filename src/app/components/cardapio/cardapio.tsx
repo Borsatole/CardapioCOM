@@ -183,7 +183,7 @@ function Cardapio() {
         <h1 className="text-5xl font-bold text-gray-800 text-center">Cardápio</h1>
 
         <div id='categorias' className='w-full'>
-            <ul className='flex justify-center items-center gap-10'>
+            <ul className='flex justify-center items-center gap-10 overflow-x-scroll'>
                 {listaCategorias.map((categoria, index) => (
                 <li
                     key={index}
@@ -208,6 +208,7 @@ function Cardapio() {
                     id={prato.id}
                     imagem={prato.imagem}
                     titulo={prato.titulo}
+                    categoria={prato.categoria}
                     precoOriginal={prato.precoOriginal}
                     precoFinal={prato.precoFinal}
                     descricao={prato.descricao}
