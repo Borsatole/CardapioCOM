@@ -1,6 +1,14 @@
 import React, { useState } from "react";
+import { Prato } from "../types/types";
+import { handleAddQuantidade, handleRemoveQuantidade } from "./functions";
 
-const InputQuantidade = () => {
+type Props = {
+  produto: Prato;
+  produtos: Prato[];
+  setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>;
+};
+
+const InputQuantidade = ({ produto, produtos, setProdutos }: Props) => {
   const [value, setValue] = useState(1);
 
   if (value < 1) {
@@ -11,10 +19,12 @@ const InputQuantidade = () => {
 
   const decrement = () => {
     setValue((prev) => prev - 1);
+    handleRemoveQuantidade(produtos, produto, setProdutos);
   };
 
   const increment = () => {
     setValue((prev) => prev + 1);
+    handleAddQuantidade(produtos, produto, setProdutos);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,7 +38,7 @@ const InputQuantidade = () => {
       <div className="flex items-center gap-x-1.5">
         <button
           type="button"
-          className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
+          className="size-6 inline-flex justify-center items-center gap-x-2 text-sm font-medium rounded-md border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800 "
           onClick={decrement}
           aria-label="Decrease"
         >
@@ -49,9 +59,10 @@ const InputQuantidade = () => {
         </button>
 
         <input
-          className="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none dark:text-white"
+          className="p-0 w-6 bg-transparent border-0 text-gray-800 text-center focus:ring-0 [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none dark:text-white focus-visible:outline-0"
           type="number"
           value={value}
+          readOnly = {true}
           onChange={handleChange}
           aria-roledescription="Number field"
           style={{ MozAppearance: "textfield" }}

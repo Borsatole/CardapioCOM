@@ -5,7 +5,7 @@ export interface Prato {
   categoria: string;
   quatidade: number;
   observacao: string;
-  precoOriginal: string;
-  precoFinal: string;
+  precoOriginal: number;
+  precoFinal: number;
   descricao: string;
 }

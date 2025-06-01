@@ -4,6 +4,8 @@ import React from 'react';
 import { Prato } from '../types/types';
 import InputQuantidade from './quantidadeInput';
 import { handleDeleteProdutoDoCarrinho } from './functions';
+import { LuBadgeInfo } from "react-icons/lu";
+
 
 interface ModalDeFinalizacaoProps {
   isOpen: boolean;
@@ -42,58 +44,98 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </span>
-          </button>
+        </button>
       </div>
-
+      {/* produtos do carrinho */}
       <div className="flex-grow overflow-y-auto p-4">
         {produtos.length === 0 ? (
           <p className="text-gray-500 dark:text-gray-400">Nenhum produto no carrinho.</p>
         ) : (
           <ul className="space-y-3">
-  {produtos.map((produto) => (
-    <li
-      key={produto.id}
-      className="flex flex-col bg-amber-50 p-2 rounded-[14px] shadow-sm"
-    >
-      <div className="flex items-center justify-between gap-3">
-        {/* Imagem */}
-        <img
-          src={produto.imagem}
-          alt={produto.titulo}
-          className="w-14 h-14 rounded object-cover"
-        />
+            {produtos.map((produto: Prato) => (
+              <li
+                key={produto.id}
+                className="flex flex-col bg-amber-50 p-2 rounded-[14px] shadow-sm"
+              >
+                <div className="flex items-center justify-between gap-3">
+                  {/* Imagem */}
+                  <div className='bg-white border border-gray-200 rounded p-0.5'>
+                    <img
+                    src={produto.imagem}
+                    alt={produto.titulo}
+                    className="w-14 h-14 rounded object-cover"
+                  />
+                  </div>
 
-        {/* Infos do produto */}
-        <div className="flex flex-col flex-1">
-          <span className="font-semibold text-sm">{produto.titulo}</span>
-          <span className="text-xs text-gray-500">
-            {produto.precoFinal || produto.precoOriginal}
-          </span>
-        </div>
+                  {/* Infos do produto */}
+                  <div className="flex flex-col flex-1">
+                    <span className="font-semibold text-sm">{produto.titulo}</span>
+                    <span className="text-xs text-gray-500">
+                      {(produto.precoFinal).toFixed(2) || produto.precoOriginal}
+                    </span>
+                    
+                    
+                  </div>
+                  
 
-        {/* Quantidade */}
-        <div className="w-28">
-          <InputQuantidade />
-        </div>
-      </div>
+                  {/* Quantidade */}
+                  <div className="w-28">
+                    <InputQuantidade 
+                      produto={produto}
+                      produtos={produtos}
+                      setProdutos={setProdutos}
+                    />
+                  </div>
+                </div>
 
-      {/* Ações */}
-      <div className="flex justify-end gap-3 mt-2 text-sm text-blue-600">
-        <button onClick={() => setIsOpen(false)}>Editar</button>
-        <button
-          onClick={() =>
-            handleDeleteProdutoDoCarrinho(produtos, produto.id, setProdutos)
-          }
-        >
-          Remover
-        </button>
-      </div>
-    </li>
-  ))}
+                
+                
+                {produto.observacao &&
+                <div className="text-xs mt-2.5 text-gray-500 flex gap-1 flex-col ">
+                  <span className='flex gap-1 items-center font-semibold'>
+                    <LuBadgeInfo size={16}/> observacao:
+                  </span>
+
+                  <span>{produto.observacao}</span>
+
+                </div>
+                }
+
+
+
+                {/* Ações */}
+                <div className="flex justify-end gap-3 mt-1 text-sm text-blue-600">
+                  <button onClick={() => setIsOpen(false)}>Editar</button>
+                  <button
+                    onClick={() =>
+                      handleDeleteProdutoDoCarrinho(produtos, produto.id, setProdutos)
+                    }
+                  >
+                    Remover
+                  </button>
+                </div>
+              </li>
+            ))}
           </ul>
 
         )}
       </div>
+
+      {/* Total */}
+      <div className="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700">
+        <span className="text-sm font-semibold dark:text-white">Total:</span>
+        <span className="text-lg font-semibold dark:text-white">
+
+          {produtos.reduce((total, produto) => {
+              const preco = produto.precoFinal
+              return total + preco;
+            }, 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+          }
+        
+        </span>
+      </div>
+
+
     </div>
   );
 }

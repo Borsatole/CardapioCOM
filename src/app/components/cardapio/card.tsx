@@ -1,21 +1,16 @@
 import React from 'react';
 import { FaCartArrowDown } from "react-icons/fa";
 import { useAppContext } from '../carrinho_compras/appContext';
-interface CardPratoProps {
-  id: number;
-  imagem: string;
-  titulo: string;
-  categoria: string;
-  precoOriginal: string;
-  precoFinal: string;
-  descricao: string;
-}
+import { Prato } from '../types/types';
 
-const CardPrato: React.FC<CardPratoProps> = ({
+
+const CardPrato: React.FC<Prato> = ({
   id,
   imagem,
   titulo,
   categoria,
+  quatidade,
+  observacao,
   precoOriginal,
   precoFinal,
   descricao,
@@ -31,7 +26,16 @@ const CardPrato: React.FC<CardPratoProps> = ({
       return;
     }
 
-    const novoProduto = { id, imagem, titulo, categoria, precoOriginal, precoFinal, descricao };
+    const novoProduto = { 
+       id,
+       imagem, 
+       titulo, 
+       categoria,
+       quatidade,
+       observacao,
+       precoOriginal,
+       precoFinal, 
+       descricao };
     setProdutos([...produtos, novoProduto]);
     
   };

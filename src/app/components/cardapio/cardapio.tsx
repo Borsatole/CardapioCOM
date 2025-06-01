@@ -24,16 +24,15 @@ function Cardapio() {
     const [pratosFiltrados, setPratosFiltrados] = useState<Prato[]>([]);
 
     const [pratos] = useState<Prato[]>([
-  // Combos
   {
     id: 1,
     imagem: 'https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$ksXb0fyM/200/200/original?country=br',
     titulo: 'Combo Clássico',
     categoria: 'Combos',
     quatidade: 1,
-    observacao: '',
-    precoOriginal: 'R$ 39,90',
-    precoFinal: 'R$ 34,90',
+    observacao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
+    precoOriginal: 39.90,
+    precoFinal: 34.90,
     descricao: 'Hambúrguer clássico, batata média e refrigerante.',
   },
   {
@@ -43,21 +42,19 @@ function Cardapio() {
     categoria: 'Combos',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 49,90',
-    precoFinal: 'R$ 44,90',
+    precoOriginal: 49.90,
+    precoFinal: 44.90,
     descricao: 'Dois hambúrgueres, batata grande e refrigerante 600ml.',
   },
-
-  // Burgers
   {
     id: 3,
     imagem: 'https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$k6X0kr6l/200/200/original?country=br',
     titulo: 'Hambúrguer Clássico',
     categoria: 'Burgers',
     quatidade: 1,
-    observacao: '',
-    precoOriginal: 'R$ 19,90',
-    precoFinal: 'R$ 14,90',
+    observacao: 'Por favor retirar cebola',
+    precoOriginal: 19.90,
+    precoFinal: 14.90,
     descricao: 'Carne bovina, queijo, alface, tomate e molho especial.',
   },
   {
@@ -67,12 +64,10 @@ function Cardapio() {
     categoria: 'Burgers',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 24,90',
-    precoFinal: 'R$ 19,90',
+    precoOriginal: 24.90,
+    precoFinal: 19.90,
     descricao: 'Hambúrguer com queijo cheddar, bacon crocante e maionese da casa.',
   },
-
-  // Acompanhamentos
   {
     id: 5,
     imagem: 'https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kMXFAQwe/200/200/original?country=br',
@@ -80,8 +75,8 @@ function Cardapio() {
     categoria: 'Acompanhamentos',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 14,90',
-    precoFinal: 'R$ 12,90',
+    precoOriginal: 14.90,
+    precoFinal: 12.90,
     descricao: 'Croquetes de frango empanados, acompanha molho.',
   },
   {
@@ -91,12 +86,10 @@ function Cardapio() {
     categoria: 'Acompanhamentos',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 13,90',
-    precoFinal: 'R$ 10,90',
+    precoOriginal: 13.90,
+    precoFinal: 10.90,
     descricao: 'Anéis de cebola empanados e fritos, super crocantes.',
   },
-
-  // Porções
   {
     id: 7,
     imagem: 'https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kvX4h9AE/200/200/original?country=br',
@@ -104,8 +97,8 @@ function Cardapio() {
     categoria: 'Porções',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 11,90',
-    precoFinal: 'R$ 9,90',
+    precoOriginal: 11.90,
+    precoFinal: 9.90,
     descricao: 'Batata frita crocante com tempero especial.',
   },
   {
@@ -115,12 +108,10 @@ function Cardapio() {
     categoria: 'Porções',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 13,90',
-    precoFinal: 'R$ 11,90',
+    precoOriginal: 13.90,
+    precoFinal: 11.90,
     descricao: 'Porção de mandioca frita com alho e salsa.',
   },
-
-  // Bebidas
   {
     id: 9,
     imagem: 'https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kNXMLd8s/200/200/original?country=br',
@@ -128,8 +119,8 @@ function Cardapio() {
     categoria: 'Bebidas',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 6,00',
-    precoFinal: 'R$ 5,00',
+    precoOriginal: 6.00,
+    precoFinal: 5.00,
     descricao: 'Refrigerante gelado para acompanhar sua refeição.',
   },
   {
@@ -139,12 +130,10 @@ function Cardapio() {
     categoria: 'Bebidas',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 7,90',
-    precoFinal: 'R$ 6,90',
+    precoOriginal: 7.90,
+    precoFinal: 6.90,
     descricao: 'Suco natural da fruta, sem conservantes.',
   },
-
-  // Molhos
   {
     id: 11,
     imagem: 'https://img.freepik.com/fotos-premium/molho-de-churrasco-em-tigela-isolada-no-fundo-branco_711700-792.jpg',
@@ -152,8 +141,8 @@ function Cardapio() {
     categoria: 'Molhos',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 3,00',
-    precoFinal: 'R$ 2,00',
+    precoOriginal: 3.00,
+    precoFinal: 2.00,
     descricao: 'Molho barbecue artesanal defumado.',
   },
   {
@@ -163,12 +152,10 @@ function Cardapio() {
     categoria: 'Molhos',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 3,00',
-    precoFinal: 'R$ 2,00',
+    precoOriginal: 3.00,
+    precoFinal: 2.00,
     descricao: 'Molho à base de maionese com ketchup e temperos.',
   },
-
-  // Sobremesas
   {
     id: 13,
     imagem: 'https://api-middleware-mcd.mcdonaldscupones.com/media/image/product$kpX0NLJ6/200/200/original?country=br',
@@ -176,8 +163,8 @@ function Cardapio() {
     categoria: 'Sobremesas',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 16,00',
-    precoFinal: 'R$ 13,90',
+    precoOriginal: 16.00,
+    precoFinal: 13.90,
     descricao: 'Bolo de chocolate com recheio quente e sorvete de creme.',
   },
   {
@@ -187,11 +174,12 @@ function Cardapio() {
     categoria: 'Sobremesas',
     quatidade: 1,
     observacao: '',
-    precoOriginal: 'R$ 10,00',
-    precoFinal: 'R$ 8,00',
+    precoOriginal: 10.00,
+    precoFinal: 8.00,
     descricao: 'Sorvete artesanal com calda de chocolate.',
   },
-    ]);
+]);
+
 
 
 
@@ -211,8 +199,8 @@ function Cardapio() {
     <div className='w-full flex flex-col gap-5 bg-gray-50 h-screen pt-10'>
         <h1 className="text-5xl font-bold text-gray-800 text-center">Cardápio</h1>
 
-        <div id='categorias' className='w-full '>
-            <ul className='flex pl-[36rem] md:pl-0 justify-center items-center gap-10 overflow-x-scroll'>
+        <div id='categorias' className='w-full px-4'>
+            <ul className='flex items-center gap-10 overflow-x-scroll'>
                 {listaCategorias.map((categoria, index) => (
                 <li
                     key={index}
@@ -238,6 +226,8 @@ function Cardapio() {
                     imagem={prato.imagem}
                     titulo={prato.titulo}
                     categoria={prato.categoria}
+                    quatidade={prato.quatidade}
+                    observacao={prato.observacao}
                     precoOriginal={prato.precoOriginal}
                     precoFinal={prato.precoFinal}
                     descricao={prato.descricao}
