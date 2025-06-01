@@ -1,10 +1,12 @@
 'use client';
 
 import React from 'react';
+import { useState, useEffect } from 'react';
 import { Prato } from '../types/types';
 import InputQuantidade from './quantidadeInput';
-import { handleDeleteProdutoDoCarrinho } from './functions';
+import { handleDeleteProdutoDoCarrinho, handleEditarObservacao } from './functions';
 import { LuBadgeInfo } from "react-icons/lu";
+
 
 
 interface ModalDeFinalizacaoProps {
@@ -15,10 +17,24 @@ interface ModalDeFinalizacaoProps {
 }
 
 function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalDeFinalizacaoProps) {
+  const [pulsar, setPulsar] = useState(false);
+
+
+  useEffect(() => {
+      if (produtos.length > 0) {
+        setPulsar(true);
+        const timeout = setTimeout(() => setPulsar(false), 300);
+        return () => clearTimeout(timeout);
+      }
+    }, [produtos]);
+
 
   if (!isOpen) {
     return null;
   }
+
+
+  
 
   return (
     <div
@@ -59,12 +75,12 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
               >
                 <div className="flex items-center justify-between gap-3">
                   {/* Imagem */}
-                  <div className='bg-white border border-gray-200 rounded p-0.5'>
+                  <div className='bg-white border border-gray-200 rounded p-1'>
                     <img
                     src={produto.imagem}
                     alt={produto.titulo}
                     className="w-14 h-14 rounded object-cover"
-                  />
+                    />
                   </div>
 
                   {/* Infos do produto */}
@@ -81,6 +97,7 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
                   {/* Quantidade */}
                   <div className="w-28">
                     <InputQuantidade 
+                      quantidade={produto.quatidade}
                       produto={produto}
                       produtos={produtos}
                       setProdutos={setProdutos}
@@ -105,7 +122,7 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
 
                 {/* Ações */}
                 <div className="flex justify-end gap-3 mt-1 text-sm text-blue-600">
-                  <button onClick={() => setIsOpen(false)}>Editar</button>
+                  <button onClick={() => handleEditarObservacao(produtos, produto, setProdutos)}>Editar</button>
                   <button
                     onClick={() =>
                       handleDeleteProdutoDoCarrinho(produtos, produto.id, setProdutos)
@@ -123,8 +140,9 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
 
       {/* Total */}
       <div className="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700">
+        
         <span className="text-sm font-semibold dark:text-white">Total:</span>
-        <span className="text-lg font-semibold dark:text-white">
+        <span className={`text-lg font-semibold dark:text-white ${pulsar ? 'efeitopulsar' : ''}`}>
 
           {produtos.reduce((total, produto) => {
               const preco = produto.precoFinal

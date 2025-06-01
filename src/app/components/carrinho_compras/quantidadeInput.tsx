@@ -3,13 +3,14 @@ import { Prato } from "../types/types";
 import { handleAddQuantidade, handleRemoveQuantidade } from "./functions";
 
 type Props = {
+  quantidade: number;
   produto: Prato;
   produtos: Prato[];
   setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>;
 };
 
-const InputQuantidade = ({ produto, produtos, setProdutos }: Props) => {
-  const [value, setValue] = useState(1);
+const InputQuantidade = ({ quantidade, produto, produtos, setProdutos }: Props) => {
+  const [value, setValue] = useState(quantidade || 1);
 
   if (value < 1) {
     setValue(1);

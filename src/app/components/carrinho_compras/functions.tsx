@@ -51,3 +51,25 @@ export function handleRemoveQuantidade(
   setProdutos(produtosAtualizados);
 }
 
+export function handleEditarObservacao(
+  produtos: Prato[],
+  produto: Prato,
+  setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>
+) {
+  const novaObservacao = prompt("Digite a nova observação:");
+
+  if (novaObservacao !== null) {
+    const produtosAtualizados = produtos.map((item) => {
+      if (item.id === produto.id) {
+        return {
+          ...item,
+          observacao: novaObservacao,
+        };
+      }
+      return item;
+    });
+
+    setProdutos(produtosAtualizados);
+  }
+}
+
