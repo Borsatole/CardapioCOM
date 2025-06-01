@@ -8,7 +8,7 @@ import ModalDeFinalizacao from "./modal_finalizacao";
 
 function CarrinhoDeCompras() {
 
-  const {produtos, isOpen, setIsOpen} = useAppContext();
+  const {produtos, setProdutos,  isOpen, setIsOpen} = useAppContext();
 
   return (
     <>
@@ -28,6 +28,7 @@ function CarrinhoDeCompras() {
         {isOpen && 
         <ModalDeFinalizacao 
         produtos={produtos} 
+        setProdutos={setProdutos}
         isOpen={isOpen} 
         setIsOpen={setIsOpen} 
         />}

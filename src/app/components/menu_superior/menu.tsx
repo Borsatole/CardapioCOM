@@ -21,11 +21,11 @@ function Menu() {
 
         {/* versao desktop */}
         
-        <ul className='hidden md:flex gap-10'>
-            <li>Sobre</li>
-            <li>Cardápio</li>
-            <li>Promoçoes</li>
-            <li>Atendimento</li>
+        <ul className='hidden md:flex gap-10 '>
+            <li className='selectefeito'>Sobre</li>
+            <li className='selectefeito'>Cardápio</li>
+            <li className='selectefeito'>Promoçoes</li>
+            <li className='selectefeito'>Atendimento</li>
         </ul>
         
         <div className='md:flex icons gap-5'>

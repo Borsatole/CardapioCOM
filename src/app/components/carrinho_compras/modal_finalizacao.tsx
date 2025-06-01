@@ -2,14 +2,17 @@
 
 import React from 'react';
 import { Prato } from '../types/types';
+import InputQuantidade from './quantidadeInput';
+import { handleDeleteProdutoDoCarrinho } from './functions';
 
 interface ModalDeFinalizacaoProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
   produtos: Prato[];
+  setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>
 }
 
-function ModalDeFinalizacao({ produtos, isOpen, setIsOpen }: ModalDeFinalizacaoProps) {
+function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalDeFinalizacaoProps) {
 
   if (!isOpen) {
     return null;
@@ -47,21 +50,48 @@ function ModalDeFinalizacao({ produtos, isOpen, setIsOpen }: ModalDeFinalizacaoP
           <p className="text-gray-500 dark:text-gray-400">Nenhum produto no carrinho.</p>
         ) : (
           <ul className="space-y-3">
-            {produtos.map((produto) => (
-              <li key={produto.id} className="flex bg-amber-200 p-1.5 justify-between items-center pb-2 rounded-[14px]">
-                <div className="flex items-center gap-2 flex-col">
-                  <div className='flex gap-2'>
-                  <img src={produto.imagem} alt={produto.titulo} className="w-16 h-16" />
-                  <span className="font-bold">{produto.titulo}</span>
-                  </div>
-                  <div className='flex gap-2 '>
-                    <a href="">editar</a>
-                    <a href="">remover</a>
-                  </div>
-                </div>
-              </li>
-            ))}
+  {produtos.map((produto) => (
+    <li
+      key={produto.id}
+      className="flex flex-col bg-amber-50 p-2 rounded-[14px] shadow-sm"
+    >
+      <div className="flex items-center justify-between gap-3">
+        {/* Imagem */}
+        <img
+          src={produto.imagem}
+          alt={produto.titulo}
+          className="w-14 h-14 rounded object-cover"
+        />
+
+        {/* Infos do produto */}
+        <div className="flex flex-col flex-1">
+          <span className="font-semibold text-sm">{produto.titulo}</span>
+          <span className="text-xs text-gray-500">
+            {produto.precoFinal || produto.precoOriginal}
+          </span>
+        </div>
+
+        {/* Quantidade */}
+        <div className="w-28">
+          <InputQuantidade />
+        </div>
+      </div>
+
+      {/* Ações */}
+      <div className="flex justify-end gap-3 mt-2 text-sm text-blue-600">
+        <button onClick={() => setIsOpen(false)}>Editar</button>
+        <button
+          onClick={() =>
+            handleDeleteProdutoDoCarrinho(produtos, produto.id, setProdutos)
+          }
+        >
+          Remover
+        </button>
+      </div>
+    </li>
+  ))}
           </ul>
+
         )}
       </div>
     </div>

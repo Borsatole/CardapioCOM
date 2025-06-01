@@ -1,20 +1,12 @@
 'use client'
 
+import { Prato } from "../types/types";
+
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-type Produto = {
-  id: number;
-  imagem: string;
-  titulo: string;
-  categoria: string;
-  precoOriginal: string;
-  precoFinal: string;
-  descricao: string;
-};
-
 type AppContextType = {
-  produtos: Produto[];
-  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>;
+  produtos: Prato[];
+  setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>;
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 };
@@ -32,7 +24,7 @@ type AppProviderProps = {
 };
 
 export function AppProvider({ children }: AppProviderProps) {
-  const [produtos, setProdutos] = useState<Produto[]>([
+  const [produtos, setProdutos] = useState<Prato[]>([
     
   ]);
 

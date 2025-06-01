@@ -4,12 +4,12 @@
   color: #FFFFFF;
 }
 
-li {
+.selectefeito {
   list-style: none;
   cursor: pointer;
 }
 
-li:hover {
+.selectefeito:hover {
   color: #FF7F0A;
   list-style: none;
   cursor: pointer; 
