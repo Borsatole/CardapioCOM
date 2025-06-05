@@ -76,45 +76,78 @@ export function handleEditarObservacao(
 
 // adicionar uma lista de adicinais dentro do array do produto
 export function handleAdicionarAdicional(
-    produto: Produto,
-    adicionais: Adicional[],
-    setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
+  produto: Produto,
+  novosAdicionais: Adicional[],
+  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
 ) {
-  
   setProdutos((prevProdutos) => {
     const produtosAtualizados = prevProdutos.map((item) => {
       if (item.idAleatorio === produto.idAleatorio) {
+        // Junta os adicionais antigos com os novos
+        const adicionaisAtualizados = item.adicionais
+          ? [...item.adicionais, ...novosAdicionais]
+          : [...novosAdicionais];
+
+        // Recalcula o valor total baseado no preço base + soma dos adicionais
+        const totalAdicionais = adicionaisAtualizados.reduce(
+          (total, adicional) => total + adicional.preco,
+          0
+        );
+
         return {
           ...item,
-          adicionais: item.adicionais ? [...item.adicionais, ...adicionais] : adicionais,
+          adicionais: adicionaisAtualizados,
+          ValorTotal: item.precoFinal + totalAdicionais,
         };
       }
       return item;
     });
+
     return produtosAtualizados;
   });
-  
 }
 
+
 export function handleRemoverAdicional(
-    produto: Produto,
-    adicionais: Adicional[],
-    setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
+  produto: Produto,
+  adicionaisParaRemover: Adicional[],
+  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
 ) {
-  
   setProdutos((prevProdutos) => {
     const produtosAtualizados = prevProdutos.map((item) => {
       if (item.idAleatorio === produto.idAleatorio) {
+        if (!item.adicionais) return item;
+
+        const adicionaisAtualizados = [...item.adicionais];
+
+        adicionaisParaRemover.forEach((remover) => {
+          const index = adicionaisAtualizados.findIndex(
+            (ad) => ad.id === remover.id
+          );
+          if (index !== -1) {
+            adicionaisAtualizados.splice(index, 1); // Remove só 1 ocorrência
+          }
+        });
+
+        const totalAdicionais = adicionaisAtualizados.reduce(
+          (total, adicional) => total + adicional.preco,
+          0
+        );
+
         return {
           ...item,
-          adicionais: item.adicionais?.filter((adicional) => !adicionais.includes(adicional)),
+          adicionais: adicionaisAtualizados,
+          ValorTotal: item.precoFinal + totalAdicionais,
         };
       }
+
       return item;
     });
+
     return produtosAtualizados;
   });
-  
 }
+
+
 
 

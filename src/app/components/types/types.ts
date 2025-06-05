@@ -18,6 +18,7 @@ export interface Produto {
   observacao: string;
   precoOriginal: number;
   precoFinal: number;
+  ValorTotal?: number;
   descricao: string;
   idAleatorio?: number;
   adicionais?: Adicional[];

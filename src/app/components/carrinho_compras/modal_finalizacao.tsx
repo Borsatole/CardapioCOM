@@ -95,7 +95,10 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
                   <div className="flex flex-col flex-1">
                     <span className="font-semibold text-sm">{produto.titulo}</span>
                     <span className="text-xs text-gray-500">
-                      {(produto.precoFinal).toFixed(2) || produto.precoOriginal}
+                      {(typeof produto.ValorTotal === 'number' 
+                        ? produto.ValorTotal 
+                        : produto.precoFinal
+                      ).toFixed(2)}
                     </span>
                     
                     
@@ -153,7 +156,7 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
         <span className={`text-lg font-semibold dark:text-white ${pulsar ? 'efeitopulsar' : ''}`}>
 
           {produtos.reduce((total, produto) => {
-              const preco = produto.precoFinal
+              const preco = produto.ValorTotal || produto.precoFinal;
               return total + preco;
             }, 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
           }
