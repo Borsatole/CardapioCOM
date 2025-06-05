@@ -12,14 +12,16 @@ export function handleAddQuantidade(
   setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
 ) {
   const produtosAtualizados = produtos.map((item) => {
-    if (item.idAleatorio === produto.idAleatorio) { 
-      const precoUnitario = item.precoFinal / item.quatidade;
+    if (item.idAleatorio === produto.idAleatorio) {
       const novaQuantidade = item.quatidade + 1;
+      const valorBase = item.precoFinal;
+      const totalAdicionais = (item.adicionais ?? []).reduce((total, adicional) => total + adicional.preco, 0);
+      const precoUnitario = valorBase + totalAdicionais;
 
       return {
         ...item,
         quatidade: novaQuantidade,
-        precoFinal: precoUnitario * novaQuantidade,
+        ValorTotal: precoUnitario * novaQuantidade,
       };
     }
     return item;
@@ -27,6 +29,7 @@ export function handleAddQuantidade(
 
   setProdutos(produtosAtualizados);
 }
+
 
 export function handleRemoveQuantidade(
   produtos: Produto[],
@@ -35,13 +38,15 @@ export function handleRemoveQuantidade(
 ) {
   const produtosAtualizados = produtos.map((item) => {
     if (item.idAleatorio === produto.idAleatorio && item.quatidade > 1) {
-      const precoUnitario = item.precoFinal / item.quatidade;
       const novaQuantidade = item.quatidade - 1;
+      const valorBase = item.precoFinal;
+      const totalAdicionais = (item.adicionais ?? []).reduce((total, adicional) => total + adicional.preco, 0);
+      const precoUnitario = valorBase + totalAdicionais;
 
       return {
         ...item,
         quatidade: novaQuantidade,
-        precoFinal: precoUnitario * novaQuantidade,
+        ValorTotal: precoUnitario * novaQuantidade,
       };
     }
     return item;
@@ -50,12 +55,13 @@ export function handleRemoveQuantidade(
   setProdutos(produtosAtualizados);
 }
 
+
 export function handleEditarObservacao(
   produtos: Produto[],
   produto: Produto,
-  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
+  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>,
+  novaObservacao: string
 ) {
-  const novaObservacao = prompt("Digite a nova observação:");
 
   if (novaObservacao !== null) {
     const produtosAtualizados = produtos.map((item) => {
@@ -74,7 +80,6 @@ export function handleEditarObservacao(
 
 
 
-// adicionar uma lista de adicinais dentro do array do produto
 export function handleAdicionarAdicional(
   produto: Produto,
   novosAdicionais: Adicional[],
@@ -83,21 +88,22 @@ export function handleAdicionarAdicional(
   setProdutos((prevProdutos) => {
     const produtosAtualizados = prevProdutos.map((item) => {
       if (item.idAleatorio === produto.idAleatorio) {
-        // Junta os adicionais antigos com os novos
         const adicionaisAtualizados = item.adicionais
           ? [...item.adicionais, ...novosAdicionais]
           : [...novosAdicionais];
 
-        // Recalcula o valor total baseado no preço base + soma dos adicionais
         const totalAdicionais = adicionaisAtualizados.reduce(
           (total, adicional) => total + adicional.preco,
           0
         );
 
+        const precoUnitario = item.precoFinal + totalAdicionais;
+        const valorTotal = precoUnitario * item.quatidade;
+
         return {
           ...item,
           adicionais: adicionaisAtualizados,
-          ValorTotal: item.precoFinal + totalAdicionais,
+          ValorTotal: valorTotal,
         };
       }
       return item;
@@ -106,6 +112,7 @@ export function handleAdicionarAdicional(
     return produtosAtualizados;
   });
 }
+
 
 
 export function handleRemoverAdicional(
@@ -125,7 +132,7 @@ export function handleRemoverAdicional(
             (ad) => ad.id === remover.id
           );
           if (index !== -1) {
-            adicionaisAtualizados.splice(index, 1); // Remove só 1 ocorrência
+            adicionaisAtualizados.splice(index, 1);
           }
         });
 
@@ -134,10 +141,13 @@ export function handleRemoverAdicional(
           0
         );
 
+        const precoUnitario = item.precoFinal + totalAdicionais;
+        const valorTotal = precoUnitario * item.quatidade;
+
         return {
           ...item,
           adicionais: adicionaisAtualizados,
-          ValorTotal: item.precoFinal + totalAdicionais,
+          ValorTotal: valorTotal,
         };
       }
 
@@ -149,6 +159,7 @@ export function handleRemoverAdicional(
 }
 
 
+
 export function agruparAdicionais(produtos: Produto[]) {
   const todosAdicionais = produtos.flatMap(produto => produto.adicionais ?? []);
 
@@ -158,9 +169,10 @@ export function agruparAdicionais(produtos: Produto[]) {
       existente.quantidade += 1;
     } else {
       acc.push({
+        
         id: adicional.id,
         titulo: adicional.titulo,
-        quantidade: 1,
+        quantidade: 1
       });
     }
     return acc;

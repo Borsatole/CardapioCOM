@@ -4,9 +4,18 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Produto } from '../types/types';
 import InputQuantidade from './quantidadeInput';
-import { handleDeleteProdutoDoCarrinho } from './functions';
-import { LuBadgeInfo } from "react-icons/lu";
+import { agruparAdicionais, handleDeleteProdutoDoCarrinho } from './functions';
 import ModalEditarProduto from './modal_editar_produto';
+
+
+import { LuBadgeInfo } from "react-icons/lu";
+import { IoMdAddCircleOutline } from "react-icons/io";
+import { FaWhatsapp } from "react-icons/fa6";
+import { TiShoppingCart } from "react-icons/ti";
+
+
+
+
 
 
 
@@ -94,12 +103,27 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
                   {/* Infos do produto */}
                   <div className="flex flex-col flex-1">
                     <span className="font-semibold text-sm">{produto.titulo}</span>
-                    <span className="text-xs text-gray-500">
-                      {(typeof produto.ValorTotal === 'number' 
-                        ? produto.ValorTotal 
-                        : produto.precoFinal
-                      ).toFixed(2)}
-                    </span>
+
+
+                    {/* Valor */}
+                    {(produto?.ValorTotal ?? 0) > (produto?.precoFinal ?? 0) ? (
+                      <div className="flex gap-2">
+                        <span className="text-xs text-gray-500 line-through">
+                          {produto?.precoFinal?.toFixed(2)}
+                        </span>
+
+                        <span className={`text-xs text-green-600 font-semibold ${pulsar ? 'efeitopulsar' : ''}`}>
+                          {(produto?.ValorTotal ?? 0).toFixed(2)}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-xs text-gray-500">
+                        {produto?.precoFinal?.toFixed(2)}
+                      </span>
+                    )}
+
+                    
+                    
                     
                     
                   </div>
@@ -116,6 +140,22 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
                   </div>
                 </div>
 
+
+                {produto.adicionais && produto.adicionais.length > 0 &&
+                <div className="text-xs mt-2.5 text-gray-500 flex gap-1 flex-col ">
+                  <span className='flex gap-1 items-center font-semibold'>
+                    <IoMdAddCircleOutline size={16}/> adicionais:
+                  </span>
+
+                  {agruparAdicionais(produtos).map((adicional: { id: number; titulo: string; quantidade: number } ) => (
+                    <span key={adicional.id}>
+                        {adicional.quantidade} x {adicional.titulo}
+                      </span>
+                  ))}
+
+                </div>
+                }
+
                 
                 
                 {produto.observacao &&
@@ -128,6 +168,10 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
 
                 </div>
                 }
+
+                
+
+                
 
 
 
@@ -150,7 +194,22 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
       </div>
 
       {/* Total */}
-      <div className="flex items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700">
+      <div className="flex flex-col items-center justify-between p-4 border-t border-gray-200 dark:border-gray-700 gap-5">
+        <div className="w-full flex flex-col gap-2">
+          <button className="border border-amber-500 pt-2 pb-2 pl-5 pr-5 hover:bg-amber-100 transition-all cursor-pointer w-full items-center flex gap-2 justify-center"
+          onClick={() => setProdutos([])}
+          >
+            <TiShoppingCart size={20}/>
+            Limpar Carrinho</button>
+
+          <button className="border border-amber-500 pt-2 pb-2 pl-5 pr-5 hover:bg-amber-100 transition-all cursor-pointer w-full items-center flex gap-2 justify-center"
+          onClick={() => alert('Pedido enviado com sucesso!')}
+          >
+            <FaWhatsapp size={20}/>
+            Finalizar Pedido</button>
+        </div>
+
+        <div className='w-full flex justify-between'>
         
         <span className="text-sm font-semibold dark:text-white">Total:</span>
         <span className={`text-lg font-semibold dark:text-white ${pulsar ? 'efeitopulsar' : ''}`}>
@@ -162,6 +221,13 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
           }
         
         </span>
+        </div>
+
+        
+
+
+
+        
       </div>
 
 

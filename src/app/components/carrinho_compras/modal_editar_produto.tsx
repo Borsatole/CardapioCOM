@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Produto, Adicional } from "../types/types";
 import { useAppContext } from "./appContext";
 import EditarQuantidadeAdicional from "./quantidadeEditarPedido";
-import {agruparAdicionais, buscarValorProduto} from "./functions";
+import {agruparAdicionais, buscarValorProduto, handleEditarObservacao} from "./functions";
 
 interface ModalEditarProdutoProps {
   isOpen: boolean;
@@ -13,7 +13,7 @@ interface ModalEditarProdutoProps {
 
 function ModalEditarProduto({ isOpen, onClose, produtoParaEditar }: ModalEditarProdutoProps) {
     const [pulsar, setPulsar] = useState(false);
-    const {adicionais, produtos} = useAppContext();
+    const {adicionais, produtos, setProdutos} = useAppContext();
     const [adicionaisFiltrados, setAdicionaisFiltrados] = useState<Adicional[]>([]);
     
     const handlebuscarAdicionais = useCallback((categoria: string) => {
@@ -105,49 +105,49 @@ function ModalEditarProduto({ isOpen, onClose, produtoParaEditar }: ModalEditarP
             
 
             {/* Adicionais */}
- {adicionaisFiltrados.length > 0 && (
-  <div className="mt-4">
-    <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Turbine</h3>
+            {adicionaisFiltrados.length > 0 && (
+              <div className="mt-4">
+                <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Turbine</h3>
 
-    <ul className="space-y-3">
-      {adicionaisFiltrados.map((adicional) => {
-        const adicionalEncontrado = AdicionaisAgrupados.find(
-          (a) => a.id === adicional.id
-        );
-        const quantidade = adicionalEncontrado?.quantidade ?? 0;
+                <ul className="space-y-3">
+                  {adicionaisFiltrados.map((adicional) => {
+                    const adicionalEncontrado = AdicionaisAgrupados.find(
+                      (a) => a.id === adicional.id
+                    );
+                    const quantidade = adicionalEncontrado?.quantidade ?? 0;
 
-        return (
-          <li key={adicional.id} className="flex items-center justify-between gap-3.5">
-            <div
-              className="w-14 h-14 bg-white border border-gray-200 rounded"
-              style={{
-                backgroundImage: `url(${adicional.imagem})`,
-                backgroundSize: "cover",
-                backgroundPosition: "center",
-              }}
-            ></div>
+                    return (
+                      <li key={adicional.id} className="flex items-center justify-between gap-3.5">
+                        <div
+                          className="w-14 h-14 bg-white border border-gray-200 rounded"
+                          style={{
+                            backgroundImage: `url(${adicional.imagem})`,
+                            backgroundSize: "cover",
+                            backgroundPosition: "center",
+                          }}
+                        ></div>
 
-            <span className="text-sm text-gray-600 dark:text-gray-200 w-13">
-              {adicional.titulo}
-            </span>
+                        <span className="text-sm text-gray-600 dark:text-gray-200 w-13">
+                          {adicional.titulo}
+                        </span>
 
-            <span>
-              <EditarQuantidadeAdicional
-                quantidade={quantidade}
-                produtoParaEditar={produtoParaEditar}
-                adicional={adicional}
-              />
-            </span>
+                        <span>
+                          <EditarQuantidadeAdicional
+                            quantidade={quantidade}
+                            produtoParaEditar={produtoParaEditar}
+                            adicional={adicional}
+                          />
+                        </span>
 
-            <span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-              {`R$ ${adicional.preco.toFixed(2)}`}
-            </span>
-          </li>
-        );
-      })}
-    </ul>
-  </div>
-)}
+                        <span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
+                          {`R$ ${adicional.preco.toFixed(2)}`}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            )}
 
 
 
@@ -155,7 +155,12 @@ function ModalEditarProduto({ isOpen, onClose, produtoParaEditar }: ModalEditarP
 
             <div className="mt-4">
               <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Observação</h3>
-              <textarea className="text-stone-500 w-full p-2 border border-gray-200 rounded" placeholder="Observação"
+              <textarea onChange={(e) => handleEditarObservacao(
+                produtos,
+                produtoParaEditar,
+                setProdutos,
+                e.target.value
+              )} className="text-stone-500 w-full p-2 border border-gray-200 rounded" placeholder="Observação"
               defaultValue={produtoParaEditar?.observacao}></textarea>
             </div>
 
