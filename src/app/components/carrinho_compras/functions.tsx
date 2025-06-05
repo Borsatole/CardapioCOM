@@ -149,5 +149,31 @@ export function handleRemoverAdicional(
 }
 
 
+export function agruparAdicionais(produtos: Produto[]) {
+  const todosAdicionais = produtos.flatMap(produto => produto.adicionais ?? []);
+
+  const resumo = todosAdicionais.reduce((acc, adicional) => {
+    const existente = acc.find(item => item.id === adicional.id);
+    if (existente) {
+      existente.quantidade += 1;
+    } else {
+      acc.push({
+        id: adicional.id,
+        titulo: adicional.titulo,
+        quantidade: 1,
+      });
+    }
+    return acc;
+  }, [] as { id: number; titulo: string; quantidade: number }[]);
+
+  return resumo;
+  
+}
+
+export function buscarValorProduto(produtoId: number, produtos: Produto[]) {
+  const produto = produtos.find(produto => produto.idAleatorio === produtoId);
+  return produto?.ValorTotal || 0;
+}
+
 
 

@@ -2,6 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { Produto, Adicional } from "../types/types";
 import { useAppContext } from "./appContext";
 import EditarQuantidadeAdicional from "./quantidadeEditarPedido";
+import {agruparAdicionais, buscarValorProduto} from "./functions";
 
 interface ModalEditarProdutoProps {
   isOpen: boolean;
@@ -11,8 +12,8 @@ interface ModalEditarProdutoProps {
 }
 
 function ModalEditarProduto({ isOpen, onClose, produtoParaEditar }: ModalEditarProdutoProps) {
-   
-    const {adicionais} = useAppContext();
+    const [pulsar, setPulsar] = useState(false);
+    const {adicionais, produtos} = useAppContext();
     const [adicionaisFiltrados, setAdicionaisFiltrados] = useState<Adicional[]>([]);
     
     const handlebuscarAdicionais = useCallback((categoria: string) => {
@@ -22,12 +23,26 @@ function ModalEditarProduto({ isOpen, onClose, produtoParaEditar }: ModalEditarP
     
 
     useEffect(() => {
-  if (produtoParaEditar) {
-    handlebuscarAdicionais(produtoParaEditar.categoria);
-  }
-}, [produtoParaEditar, handlebuscarAdicionais]);
+      if (produtoParaEditar) {
+        handlebuscarAdicionais(produtoParaEditar.categoria);
+      }
+    }, [produtoParaEditar, handlebuscarAdicionais]);
 
-    
+    useEffect(() => {
+          if (produtos.length > 0) {
+            setPulsar(true);
+            const timeout = setTimeout(() => setPulsar(false), 300);
+            return () => clearTimeout(timeout);
+          }
+      }, [produtos]);
+
+
+
+
+  const AdicionaisAgrupados = agruparAdicionais(produtos);
+    if (!produtoParaEditar?.idAleatorio) return null;
+
+    const ValorProdutoComAdicionais = buscarValorProduto(produtoParaEditar.idAleatorio, produtos);
 
 
 
@@ -61,55 +76,80 @@ function ModalEditarProduto({ isOpen, onClose, produtoParaEditar }: ModalEditarP
                   {/* Infos do produto */}
                   <div className="flex flex-col flex-1">
                     <span className="font-semibold text-gray-500 text-sm">{produtoParaEditar?.titulo}</span>
-                    <span className="text-xs text-gray-500">
-                      {typeof produtoParaEditar?.precoFinal === 'number'
-                        ? produtoParaEditar.precoFinal.toFixed(2)
-                        : produtoParaEditar?.precoOriginal}
-                    </span>
+
+                    {produtoParaEditar && ValorProdutoComAdicionais > produtoParaEditar?.precoFinal ? (
+                      <div className="flex gap-2">
+                        <span className="text-xs text-gray-500 line-through">
+                          {produtoParaEditar?.precoFinal?.toFixed(2)}
+                        </span>
+
+
+                        <span className={`text-xs text-green-600 font-semibold ${pulsar ? 'efeitopulsar' : ''}`}>
+                          {ValorProdutoComAdicionais.toFixed(2)}
+                        </span>
+                      </div>
+                    ) : (
+                      <span className="text-xs text-gray-700 font-semibold">
+                        {produtoParaEditar?.precoFinal?.toFixed(2)}
+                      </span>
+                    )}
+
+
+
+                    
                     
                   </div>
 
             </div>
 
+            
+
             {/* Adicionais */}
-            {adicionaisFiltrados.length > 0 && (
-            <div className="mt-4">
-              <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Turbine</h3>
+ {adicionaisFiltrados.length > 0 && (
+  <div className="mt-4">
+    <h3 className="text-sm font-semibold text-gray-800 dark:text-white mb-2">Turbine</h3>
 
-              <ul className="space-y-3">
-                {adicionaisFiltrados.map((adicional) => (
-                  <li key={adicional.id} className="flex items-center justify-between gap-3.5 ">
-                    
-                    <div className=" w-14 h-14 bg-white border border-gray-200 rounded" style={{
-                        backgroundImage: `url(${adicional.imagem})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                    }}>
+    <ul className="space-y-3">
+      {adicionaisFiltrados.map((adicional) => {
+        const adicionalEncontrado = AdicionaisAgrupados.find(
+          (a) => a.id === adicional.id
+        );
+        const quantidade = adicionalEncontrado?.quantidade ?? 0;
 
-                    </div>
-                    
-                    <span className="text-sm text-gray-600 dark:text-gray-200 w-13">{adicional.titulo}</span>
+        return (
+          <li key={adicional.id} className="flex items-center justify-between gap-3.5">
+            <div
+              className="w-14 h-14 bg-white border border-gray-200 rounded"
+              style={{
+                backgroundImage: `url(${adicional.imagem})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }}
+            ></div>
 
-                    <span>
-                        <EditarQuantidadeAdicional 
-                            quantidade={0}
-                            produtoParaEditar={produtoParaEditar}
-                            adicional={adicional}
-                        />
-                    </span>
+            <span className="text-sm text-gray-600 dark:text-gray-200 w-13">
+              {adicional.titulo}
+            </span>
 
-                    <span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
-                      {`R$ ${adicional.preco.toFixed(2)}`}
-                    </span>
+            <span>
+              <EditarQuantidadeAdicional
+                quantidade={quantidade}
+                produtoParaEditar={produtoParaEditar}
+                adicional={adicional}
+              />
+            </span>
 
-                    
-                    
-                  </li>
-                ))}
-          </ul>
+            <span className="text-sm font-semibold text-gray-600 dark:text-gray-200">
+              {`R$ ${adicional.preco.toFixed(2)}`}
+            </span>
+          </li>
+        );
+      })}
+    </ul>
+  </div>
+)}
 
-              
-            </div>)}
+
 
             {/* Observacao */}
 
