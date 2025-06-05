@@ -1,4 +1,5 @@
 'use client'
+
 import { TiShoppingCart } from "react-icons/ti";
 import { useEffect, useState } from "react";
 

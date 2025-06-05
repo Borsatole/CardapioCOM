@@ -30,7 +30,6 @@ function Cardapio() {
     titulo: 'Combo Clássico',
     categoria: 'Combos',
     quatidade: 1,
-    observacao: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     precoOriginal: 39.90,
     precoFinal: 34.90,
     descricao: 'Hambúrguer clássico, batata média e refrigerante.',
@@ -41,7 +40,6 @@ function Cardapio() {
     titulo: 'Combo Duplo',
     categoria: 'Combos',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 49.90,
     precoFinal: 44.90,
     descricao: 'Dois hambúrgueres, batata grande e refrigerante 600ml.',
@@ -52,7 +50,6 @@ function Cardapio() {
     titulo: 'Hambúrguer Clássico',
     categoria: 'Burgers',
     quatidade: 1,
-    observacao: 'Por favor retirar cebola',
     precoOriginal: 19.90,
     precoFinal: 14.90,
     descricao: 'Carne bovina, queijo, alface, tomate e molho especial.',
@@ -63,7 +60,6 @@ function Cardapio() {
     titulo: 'Cheeseburger Bacon',
     categoria: 'Burgers',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 24.90,
     precoFinal: 19.90,
     descricao: 'Hambúrguer com queijo cheddar, bacon crocante e maionese da casa.',
@@ -74,7 +70,6 @@ function Cardapio() {
     titulo: 'Nuggets 10 un.',
     categoria: 'Acompanhamentos',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 14.90,
     precoFinal: 12.90,
     descricao: 'Croquetes de frango empanados, acompanha molho.',
@@ -85,7 +80,6 @@ function Cardapio() {
     titulo: 'Anéis de Cebola',
     categoria: 'Acompanhamentos',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 13.90,
     precoFinal: 10.90,
     descricao: 'Anéis de cebola empanados e fritos, super crocantes.',
@@ -96,7 +90,6 @@ function Cardapio() {
     titulo: 'Batata Frita Média',
     categoria: 'Porções',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 11.90,
     precoFinal: 9.90,
     descricao: 'Batata frita crocante com tempero especial.',
@@ -107,7 +100,6 @@ function Cardapio() {
     titulo: 'Mandioca Frita',
     categoria: 'Porções',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 13.90,
     precoFinal: 11.90,
     descricao: 'Porção de mandioca frita com alho e salsa.',
@@ -118,7 +110,6 @@ function Cardapio() {
     titulo: 'Coca-Cola 350ml',
     categoria: 'Bebidas',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 6.00,
     precoFinal: 5.00,
     descricao: 'Refrigerante gelado para acompanhar sua refeição.',
@@ -129,7 +120,6 @@ function Cardapio() {
     titulo: 'Suco Natural 300ml',
     categoria: 'Bebidas',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 7.90,
     precoFinal: 6.90,
     descricao: 'Suco natural da fruta, sem conservantes.',
@@ -140,7 +130,6 @@ function Cardapio() {
     titulo: 'Molho Barbecue',
     categoria: 'Molhos',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 3.00,
     precoFinal: 2.00,
     descricao: 'Molho barbecue artesanal defumado.',
@@ -151,7 +140,6 @@ function Cardapio() {
     titulo: 'Molho Rosé',
     categoria: 'Molhos',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 3.00,
     precoFinal: 2.00,
     descricao: 'Molho à base de maionese com ketchup e temperos.',
@@ -162,7 +150,6 @@ function Cardapio() {
     titulo: 'Casquinha ',
     categoria: 'Sobremesas',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 16.00,
     precoFinal: 13.90,
     descricao: 'Bolo de chocolate com recheio quente e sorvete de creme.',
@@ -173,14 +160,16 @@ function Cardapio() {
     titulo: 'Flurry KitKat Chocolate com Coco Caramelo',
     categoria: 'Sobremesas',
     quatidade: 1,
-    observacao: '',
     precoOriginal: 10.00,
     precoFinal: 8.00,
     descricao: 'Sorvete artesanal com calda de chocolate.',
   },
-]);
+    ]);
 
-
+    // const [adicionais] = useState({
+    //   "Burgers": ["Hambúrguer", "Queijo", "Alface", "Tomate", "Ovo"],
+    //   "Porções": ["Queijo", "Chedar"],
+    // });
 
 
     useEffect(() => {
@@ -227,7 +216,7 @@ function Cardapio() {
                     titulo={prato.titulo}
                     categoria={prato.categoria}
                     quatidade={prato.quatidade}
-                    observacao={prato.observacao}
+                    
                     precoOriginal={prato.precoOriginal}
                     precoFinal={prato.precoFinal}
                     descricao={prato.descricao}

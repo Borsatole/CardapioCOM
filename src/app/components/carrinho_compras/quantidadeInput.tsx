@@ -1,12 +1,14 @@
+'use client'
+
 import React, { useState } from "react";
-import { Prato } from "../types/types";
+import { Produto } from "../types/types";
 import { handleAddQuantidade, handleRemoveQuantidade } from "./functions";
 
 type Props = {
   quantidade: number;
-  produto: Prato;
-  produtos: Prato[];
-  setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>;
+  produto?: Produto;
+  produtos?: Produto[];
+  setProdutos?: React.Dispatch<React.SetStateAction<Produto[]>>;
 };
 
 const InputQuantidade = ({ quantidade, produto, produtos, setProdutos }: Props) => {
@@ -19,14 +21,18 @@ const InputQuantidade = ({ quantidade, produto, produtos, setProdutos }: Props) 
 
 
   const decrement = () => {
-    setValue((prev) => prev - 1);
+  setValue((prev) => prev - 1);
+  if (produtos && produto && setProdutos) {
     handleRemoveQuantidade(produtos, produto, setProdutos);
-  };
+  }
+};
 
-  const increment = () => {
-    setValue((prev) => prev + 1);
+const increment = () => {
+  setValue((prev) => prev + 1);
+  if (produtos && produto && setProdutos) {
     handleAddQuantidade(produtos, produto, setProdutos);
-  };
+  }
+};
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     

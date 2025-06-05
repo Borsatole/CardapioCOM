@@ -10,7 +10,6 @@ const CardPrato: React.FC<Prato> = ({
   titulo,
   categoria,
   quatidade,
-  observacao,
   precoOriginal,
   precoFinal,
   descricao,
@@ -18,13 +17,9 @@ const CardPrato: React.FC<Prato> = ({
   
   const {produtos, setProdutos } = useAppContext();
 
-  const isInCart = produtos.some((produto) => produto.id === id);
-
   const handleAddToCart = () => {
-    if (isInCart) {
-      alert('O prato já está no carrinho de compras.');
-      return;
-    }
+
+    
 
     const novoProduto = { 
        id,
@@ -32,11 +27,17 @@ const CardPrato: React.FC<Prato> = ({
        titulo, 
        categoria,
        quatidade,
-       observacao,
+       observacao : '',
        precoOriginal,
        precoFinal, 
-       descricao };
+       descricao,
+       adicionais: [],
+       idAleatorio: Math.floor(Math.random() * 1000),
+      
+      };
     setProdutos([...produtos, novoProduto]);
+
+    
     
   };
 

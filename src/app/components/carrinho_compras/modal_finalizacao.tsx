@@ -2,22 +2,31 @@
 
 import React from 'react';
 import { useState, useEffect } from 'react';
-import { Prato } from '../types/types';
+import { Produto } from '../types/types';
 import InputQuantidade from './quantidadeInput';
-import { handleDeleteProdutoDoCarrinho, handleEditarObservacao } from './functions';
+import { handleDeleteProdutoDoCarrinho } from './functions';
 import { LuBadgeInfo } from "react-icons/lu";
+import ModalEditarProduto from './modal_editar_produto';
 
 
 
 interface ModalDeFinalizacaoProps {
   isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  produtos: Prato[];
-  setProdutos: React.Dispatch<React.SetStateAction<Prato[]>>
+  produtos: Produto[];
+  setProdutos: React.Dispatch<React.SetStateAction<Produto[]>>
 }
 
 function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalDeFinalizacaoProps) {
   const [pulsar, setPulsar] = useState(false);
+  const [EditarProdutoModal, setEditarProdutoModalOpen] = useState(false);
+  const [produtoParaEditar, setProdutoParaEditar] = useState<Produto | null>(null);
+
+
+  const handleEditarProduto = (produto: Produto) => {
+    setProdutoParaEditar(produto);
+    setEditarProdutoModalOpen(true);
+  };
 
 
   useEffect(() => {
@@ -37,8 +46,9 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
   
 
   return (
+    <>
     <div
-      className="fixed bottom-0 right-0 top-0 z-[1045] flex w-96 max-w-full flex-col border-l border-gray-200 bg-[#fff] text-neutral-700 shadow-lg dark:bg-gray-900 dark:text-white
+      className="fixed bottom-0 right-0 top-0 z-[100] flex w-96 max-w-full flex-col border-l border-gray-200 bg-[#fff] text-neutral-700 shadow-lg dark:bg-gray-900 dark:text-white
       opacity-100
       "
     >
@@ -68,20 +78,18 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
           <p className="text-gray-500 dark:text-gray-400">Nenhum produto no carrinho.</p>
         ) : (
           <ul className="space-y-3">
-            {produtos.map((produto: Prato) => (
+            {produtos.map((produto: Produto) => (
               <li
-                key={produto.id}
+                key={produto.idAleatorio}
                 className="flex flex-col bg-amber-50 p-2 rounded-[14px] shadow-sm"
               >
                 <div className="flex items-center justify-between gap-3">
                   {/* Imagem */}
-                  <div className='bg-white border border-gray-200 rounded p-1'>
-                    <img
-                    src={produto.imagem}
-                    alt={produto.titulo}
-                    className="w-14 h-14 rounded object-cover"
-                    />
-                  </div>
+                  <div className=" w-16 h-16 bg-white border border-gray-200 rounded" style={{
+                        backgroundImage: `url(${produto.imagem})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                    }}></div>
 
                   {/* Infos do produto */}
                   <div className="flex flex-col flex-1">
@@ -122,10 +130,10 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
 
                 {/* Ações */}
                 <div className="flex justify-end gap-3 mt-1 text-sm text-blue-600">
-                  <button onClick={() => handleEditarObservacao(produtos, produto, setProdutos)}>Editar</button>
+                  <button onClick={() => handleEditarProduto(produto)}>Editar</button>
                   <button
                     onClick={() =>
-                      handleDeleteProdutoDoCarrinho(produtos, produto.id, setProdutos)
+                      handleDeleteProdutoDoCarrinho(produtos, Number(produto.idAleatorio), setProdutos)
                     }
                   >
                     Remover
@@ -155,6 +163,17 @@ function ModalDeFinalizacao({ produtos, setProdutos, isOpen, setIsOpen }: ModalD
 
 
     </div>
+
+    {EditarProdutoModal && (
+      <ModalEditarProduto
+      isOpen={EditarProdutoModal}
+      
+      produtoParaEditar={produtoParaEditar}
+      onClose={() => setEditarProdutoModalOpen(false)}
+
+  />
+    )}
+    </>
   );
 }
 
