@@ -1,5 +1,4 @@
 import React from 'react'
-import { GiHamburgerMenu } from "react-icons/gi";
 
 import { FaWhatsapp } from "react-icons/fa";
 import "./menu.css";
@@ -17,7 +16,17 @@ function Menu() {
         <div className='container md:w-10/12 flex justify-between items-center gap-4'>
 
 
-        <a className='title font-bold'><span>SPACE BURGER</span></a>
+        <div className='w-[90px] h-[150%] cursor-pointer hover:scale-110 transition-all'
+        
+        style={{
+          backgroundImage: `url('/images/logo.png')`,
+          backgroundSize: 'contain',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center'
+
+        }}>
+          
+        </div>
 
         {/* versao desktop */}
         
@@ -33,10 +42,7 @@ function Menu() {
             <FaWhatsapp size={30} className='hidden md:flex'/>
         </div>
 
-        {/* versao mobile */}
-        <div className='btnMobile md:hidden border-1 p-2 border-rounded-full'>
-            <GiHamburgerMenu />
-        </div>
+        
     </div>
     </div>
   )

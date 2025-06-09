@@ -5,6 +5,7 @@ import Informacoes from "./components/informacoes/informacoes";
 import Menu from "./components/menu_superior/menu";
 
 export default function Home() {
+
   return (
     <div>
       <AppProvider>

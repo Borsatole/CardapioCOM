@@ -40,7 +40,7 @@ export default function Informacoes() {
     items-center bg-gray-100 h-96">
         <div className="w-full md:w-2/3 flex flex-col gap-5 justify-center text-center">
             <h1 className="text-5xl font-bold text-gray-800">Cardápio online</h1>
-            <p className="text-gray-800">Seja bem-vindo ao cardápio online da lanchonete <strong>SPACE BURGER</strong>!<br/>
+            <p className="text-gray-800">Seja bem-vindo ao cardápio online da lanchonete <strong>CardapioCOM</strong>!<br/>
             Este aplicativo web tem o intuito de facilitar os pedidos, possibilitando uma seleção prática e rápida dos produtos desejados e enviando-os para o WhatsApp da lanchonete, aumentando seu conforto e simplificando o pedido!</p>
         </div>
 
